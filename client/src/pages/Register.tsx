@@ -22,10 +22,12 @@ const Register: FC<RegisterProps> = () => {
         <button type="submit" className="btn btn-block">
           submit
         </button>
-        <p>Already a member?</p>
-        <Link to="/login" className="member-btn">
-          Login
-        </Link>
+        <p>
+          Already a member?
+          <Link to="/login" className="member-btn">
+            login
+          </Link>
+        </p>
       </form>
     </Wrapper>
   );
