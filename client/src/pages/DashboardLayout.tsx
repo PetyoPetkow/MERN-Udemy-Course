@@ -3,7 +3,14 @@ import { Outlet } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/Dashboard';
 import { BigSidebar, Navbar, SmallSidebar } from '../components';
 
-const DashboardContext = createContext({});
+const DashboardContext = createContext<DashboardContextState>({
+  user: { name: '' },
+  showSidebar: false,
+  isDarkTheme: false,
+  toggleDarkTheme: () => {},
+  toggleSidebar: () => {},
+  logoutUser: () => {},
+});
 
 const DashboardLayout: FC<DashboardLayoutProps> = () => {
   const user = { name: 'john' };
@@ -50,6 +57,15 @@ const DashboardLayout: FC<DashboardLayoutProps> = () => {
 };
 
 interface DashboardLayoutProps {}
+
+interface DashboardContextState {
+  user: { name: string };
+  showSidebar: boolean;
+  isDarkTheme: boolean;
+  toggleDarkTheme: () => void;
+  toggleSidebar: () => void;
+  logoutUser: () => void;
+}
 
 export const useDashboardContext = () => useContext(DashboardContext);
 
