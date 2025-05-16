@@ -1,7 +1,12 @@
 import { FC } from 'react';
+import { Outlet } from 'react-router-dom';
 
 const DashboardLayout: FC<DashboardLayoutProps> = () => {
-  return <div>DashboardLayout</div>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 interface DashboardLayoutProps {}
