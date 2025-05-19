@@ -12,13 +12,16 @@ const DashboardContext = createContext<DashboardContextState>({
   logoutUser: () => {},
 });
 
-const DashboardLayout: FC<DashboardLayoutProps> = () => {
+const DashboardLayout: FC<DashboardLayoutProps> = ({ isDarkThemeEnabled }) => {
   const user = { name: 'john' };
   const [showSidebar, setShowSidebar] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(isDarkThemeEnabled);
 
   const toggleDarkTheme = () => {
-    setIsDarkTheme((prev) => !prev);
+    const newIsDarkTheme = !isDarkTheme;
+    setIsDarkTheme(newIsDarkTheme);
+    document.body.classList.toggle('dark-theme', newIsDarkTheme);
+    localStorage.setItem('darkTheme', newIsDarkTheme.toString());
   };
 
   const toggleSidebar = () => {
@@ -56,7 +59,9 @@ const DashboardLayout: FC<DashboardLayoutProps> = () => {
   );
 };
 
-interface DashboardLayoutProps {}
+interface DashboardLayoutProps {
+  isDarkThemeEnabled: boolean;
+}
 
 interface DashboardContextState {
   user: { name: string };
