@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "setup-project": "yarn install && cd client && yarn install"
+    "setup-project": "yarn install && cd client && yarn install",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
