@@ -7,13 +7,17 @@ import { NavLink } from 'react-router-dom';
 import { useDashboardContext } from '../pages/DashboardLayout';
 
 const SmallSidebar: FC<SmallSidebarProps> = () => {
-  const data = useDashboardContext();
+  const { showSidebar, toggleSidebar } = useDashboardContext();
 
   return (
     <Wrapper>
-      <div className="sidebar-container show-sidebar">
+      <div
+        className={
+          showSidebar ? 'sidebar-container show-sidebar' : 'sidebar-container'
+        }
+      >
         <div className="content">
-          <button type="button" className="close-btn">
+          <button type="button" className="close-btn" onClick={toggleSidebar}>
             <FaTimes />
           </button>
           <header>
@@ -21,7 +25,13 @@ const SmallSidebar: FC<SmallSidebarProps> = () => {
           </header>
           <div className="nav-links">
             {links.map(({ text, path, icon }) => (
-              <NavLink to={path} key={text} className="nav-link">
+              <NavLink
+                to={path}
+                key={text}
+                className="nav-link"
+                onClick={toggleSidebar}
+                end
+              >
                 <span className="icon">{icon}</span>
                 {text}
               </NavLink>
