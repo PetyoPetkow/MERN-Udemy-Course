@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 
-export class NotFoundError extends Error{
+export class NotFoundError extends Error {
   constructor(message){
     super(message);
     this.name = 'NotFoundError';
@@ -8,7 +8,7 @@ export class NotFoundError extends Error{
   }
 }
 
-export class BadRequestError extends Error{
+export class BadRequestError extends Error {
   constructor(message){
     super(message);
     this.name = 'BadRequestError';
@@ -16,7 +16,7 @@ export class BadRequestError extends Error{
   }
 }
 
-export class UnauthenticatedError extends Error{
+export class UnauthenticatedError extends Error {
   constructor(message){
     super(message);
     this.name = 'UnauthenticatedError';
@@ -24,7 +24,7 @@ export class UnauthenticatedError extends Error{
   }
 }
 
-export class UnauthorizedError extends Error{
+export class UnauthorizedError extends Error {
   constructor(message){
     super(message);
     this.name = 'UnauthorizedError';
