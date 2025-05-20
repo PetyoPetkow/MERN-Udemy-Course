@@ -28,7 +28,7 @@ app.post('/', (req, res) => {
 // GET ALL JOBS
 app.get('/api/v1/jobs', (req, res) => {
   res.status(200).json({ jobs });
-})
+});
 
 // CREATE JOB
 app.post('/api/v1/jobs', (req, res) => {
@@ -43,19 +43,19 @@ app.post('/api/v1/jobs', (req, res) => {
   jobs.push(job);
 
   res.status(201).json({ job });
-})
+});
 
 // GET JOB BY ID
 app.get('/api/v1/jobs/:id', (req, res) => {
   const {id} = req.params;
 
-  const job = jobs.find((job) => job.id === id)
+  const job = jobs.find((job) => job.id === id);
   if(!job){
-    return res.status(404).json({ msg: `no job with id ${id} was found` })
+    return res.status(404).json({ msg: `no job with id ${id} was found` });
   }
 
-  res.status(200).json({ job })
-})
+  res.status(200).json({ job });
+});
 
 //EDIT JOB
 app.patch('/api/v1/jobs/:id', (req, res) => {
@@ -91,9 +91,18 @@ app.delete('/api/v1/jobs/:id', (req, res) => {
   jobs = newJobs;
 
   res.status(200).json({ msg: `job deleted successfully` });
-})
+});
 
-const port = process.env.PORT || 5100
+app.use('*', (req, res) => {
+  res.status(404).json({ msg: 'not found' });
+});
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).json({ msg: 'something went wrong' })
+});
+
+const port = process.env.PORT || 5100;
 
 app.listen(port, () => {
   console.log(`server running on PORT ${port}`);
