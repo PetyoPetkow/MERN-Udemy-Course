@@ -1,30 +1,38 @@
-import { body, param, validationResult } from 'express-validator';
+import {
+  body,
+  param,
+  ValidationChain,
+  validationResult,
+} from 'express-validator';
 import { BadRequestError, NotFoundError } from '../errors/customErrors.js';
 import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
 import mongoose from 'mongoose';
 import JobModel from '../models/JobModel.js';
 import User from '../models/UserModel.js';
+import { RequestHandler } from 'express';
 
-const withValidationErrors = (validateValues) => {
+const withValidationErrors = (
+  validateValues: ValidationChain[]
+): RequestHandler[] => {
   return [
-    validateValues,
+    ...validateValues,
     (req, res, next) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const errorMessages = errors.array().map((error) => error.msg);
 
         if (errorMessages[0].startsWith('no job')) {
-          throw new NotFoundError(errorMessages);
+          throw new NotFoundError(errorMessages.join(', '));
         }
 
-        throw new BadRequestError(errorMessages);
+        throw new BadRequestError(errorMessages.join(', '));
       }
       next();
     },
   ];
 };
 
-export const validateJobInput = withValidationErrors([
+export const validateJobInput: RequestHandler[] = withValidationErrors([
   body('company').notEmpty().withMessage('company is required'),
   body('position').notEmpty().withMessage('position is required'),
   body('jobLocation').notEmpty().withMessage('job location is required'),
@@ -36,7 +44,7 @@ export const validateJobInput = withValidationErrors([
     .withMessage('invalid type value'),
 ]);
 
-export const validateIdParam = withValidationErrors([
+export const validateIdParam: RequestHandler[] = withValidationErrors([
   param('id').custom(async (value) => {
     const isValidId = mongoose.Types.ObjectId.isValid(value);
     if (!isValidId) throw new BadRequestError('invalid MongoDB Id');
@@ -46,7 +54,7 @@ export const validateIdParam = withValidationErrors([
   }),
 ]);
 
-export const validateRegisterInput = withValidationErrors([
+export const validateRegisterInput: RequestHandler[] = withValidationErrors([
   body('name')
     .notEmpty()
     .withMessage('name is required')
@@ -54,7 +62,7 @@ export const validateRegisterInput = withValidationErrors([
     .withMessage('name should be between 3 and 32 symbols'),
   body('email').isEmail().withMessage('invalid email'),
   body('email').custom(async (email) => {
-    const existingUser = await User.findUserByEmail(email);
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw new BadRequestError('E-mail already in use');
     }
@@ -72,7 +80,7 @@ export const validateRegisterInput = withValidationErrors([
   body('location').notEmpty().withMessage('location is required'),
 ]);
 
-export const validateLoginInput = withValidationErrors([
+export const validateLoginInput: RequestHandler[] = withValidationErrors([
   body('email')
     .notEmpty()
     .withMessage('name is required')
