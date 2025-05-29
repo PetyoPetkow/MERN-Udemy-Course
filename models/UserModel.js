@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
   name: String,
@@ -23,4 +23,4 @@ UserSchema.statics.findUserByEmail = function (email) {
   return this.findOne({ email });
 };
 
-export default mongoose.model('Auth', UserSchema);
+export default mongoose.model('User', UserSchema);

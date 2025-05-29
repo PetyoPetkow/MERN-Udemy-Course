@@ -3,7 +3,7 @@ import { BadRequestError, NotFoundError } from '../errors/customErrors.js';
 import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
 import mongoose from 'mongoose';
 import JobModel from '../models/JobModel.js';
-import UserModel from '../models/UserModel.js';
+import User from '../models/UserModel.js';
 
 const withValidationErrors = (validateValues) => {
   return [
@@ -54,7 +54,7 @@ export const validateRegisterInput = withValidationErrors([
     .withMessage('name should be between 3 and 32 symbols'),
   body('email').isEmail().withMessage('invalid email'),
   body('email').custom(async (email) => {
-    const existingUser = await UserModel.findUserByEmail(email);
+    const existingUser = await User.findUserByEmail(email);
     if (existingUser) {
       throw new BadRequestError('E-mail already in use');
     }
@@ -70,5 +70,4 @@ export const validateRegisterInput = withValidationErrors([
     .isLength({ min: 3, max: 32 })
     .withMessage('last name should be between 3 and 32 symbols'),
   body('location').notEmpty().withMessage('location is required'),
-  body('role').isIn(['user', 'admin']).withMessage('Invalid user role'),
 ]);
