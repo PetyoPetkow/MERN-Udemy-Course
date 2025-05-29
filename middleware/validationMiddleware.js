@@ -71,3 +71,12 @@ export const validateRegisterInput = withValidationErrors([
     .withMessage('last name should be between 3 and 32 symbols'),
   body('location').notEmpty().withMessage('location is required'),
 ]);
+
+export const validateLoginInput = withValidationErrors([
+  body('email')
+    .notEmpty()
+    .withMessage('name is required')
+    .isEmail()
+    .withMessage('invalid email'),
+  body('password').notEmpty().withMessage('password is required'),
+]);
