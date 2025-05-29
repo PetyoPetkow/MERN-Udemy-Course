@@ -19,4 +19,8 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+UserSchema.statics.findUserByEmail = function (email) {
+  return this.findOne({ email });
+};
+
 export default mongoose.model('Auth', UserSchema);
