@@ -12,3 +12,8 @@ export const createJWT = (payload: string | Buffer | object) => {
 
   return token;
 };
+
+export const verifyJWT = (token: string) => {
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+  return decoded;
+};
