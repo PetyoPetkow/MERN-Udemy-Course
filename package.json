@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "setup-project": "yarn install && cd client && yarn install",
-    "dev": "nodemon --ext ts --exec tsx server.ts"
+    "server": "nodemon --ext ts --exec tsx server.ts",
+    "client": "cd client && yarn run dev",
+    "dev": "concurrently --kill-others-on-fail \" yarn run server\" \" yarn run client\""
   },
   "dependencies": {
     "bcryptjs": "3.0.2",
