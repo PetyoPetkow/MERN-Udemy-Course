@@ -2,7 +2,7 @@ import { Middleware } from 'express-validator/src/base';
 import { UnauthenticatedError } from '../errors/customErrors';
 import { verifyJWT } from '../utils/tokenUtils';
 
-export const authenticateUser: Middleware = async (req, res, next) => {
+export const authenticateUser: Middleware = (req, res, next) => {
   const token = req.cookies?.token;
 
   if (!token) throw new UnauthenticatedError('authentication invalid');

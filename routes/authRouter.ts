@@ -2,12 +2,12 @@ import { Router } from 'express';
 
 const router = Router();
 
-import { login, register } from '../controllers/authController.js';
+import { login, register } from '../controllers/authController';
 import {
   validateLoginInput,
   validateRegisterInput,
-} from '../middleware/validationMiddleware.js';
-import { logout } from '../controllers/jobController.js';
+} from '../middleware/validationMiddleware';
+import { logout } from '../controllers/jobController';
 
 router.post('/register', validateRegisterInput, register);
 router.post('/login', validateLoginInput, login);

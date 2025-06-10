@@ -1,9 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
-import User from '../models/UserModel.js';
-import { comparePassword, hashPassword } from '../utils/passwordUtils.js';
-import { UnauthenticatedError } from '../errors/customErrors.js';
+import User from '../models/UserModel';
+import { comparePassword, hashPassword } from '../utils/passwordUtils';
+import { UnauthenticatedError } from '../errors/customErrors';
 import { Request, Response } from 'express';
-import { createJWT } from '../utils/tokenUtils.js';
+import { createJWT } from '../utils/tokenUtils';
 
 export const register = async (req: Request, res: Response) => {
   const isFirstAccount = (await User.countDocuments()) === 0;

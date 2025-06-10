@@ -8,11 +8,11 @@ import {
   BadRequestError,
   NotFoundError,
   UnauthorizedError,
-} from '../errors/customErrors.js';
-import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
+} from '../errors/customErrors';
+import { JOB_STATUS, JOB_TYPE } from '../utils/constants';
 import mongoose from 'mongoose';
-import JobModel from '../models/JobModel.js';
-import User from '../models/UserModel.js';
+import JobModel from '../models/JobModel';
+import User from '../models/UserModel';
 import { request, RequestHandler } from 'express';
 
 const withValidationErrors = (

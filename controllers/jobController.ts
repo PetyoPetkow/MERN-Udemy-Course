@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import JobModel from '../models/JobModel.js';
+import JobModel from '../models/JobModel';
 import StatusCodes from 'http-status-codes';
 
 export const getAllJobs: RequestHandler<{
