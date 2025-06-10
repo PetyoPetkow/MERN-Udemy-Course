@@ -2,7 +2,6 @@ import { StatusCodes } from 'http-status-codes';
 import User from '../models/UserModel';
 import Job from '../models/JobModel';
 import { RequestHandler } from 'express';
-import { UnauthorizedError } from '../errors/customErrors';
 
 export const getCurrentUser: RequestHandler = async (req, res) => {
   const user = await User.findById(req.user?.userId);
