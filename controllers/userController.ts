@@ -4,7 +4,8 @@ import Job from '../models/JobModel';
 import { RequestHandler } from 'express';
 
 export const getCurrentUser: RequestHandler = async (req, res) => {
-  res.status(StatusCodes.OK).json({ msg: 'getCurrentUser' });
+  const user = await User.findById(req.user?.userId);
+  res.status(StatusCodes.OK).json({ user });
 };
 
 export const getApplicationStats: RequestHandler = async (req, res) => {
