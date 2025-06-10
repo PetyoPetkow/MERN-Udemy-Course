@@ -40,3 +40,12 @@ export const deleteJob: RequestHandler = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ msg: `job deleted successfully`, job: removedJob });
 };
+
+export const logout: RequestHandler = (req, res) => {
+  res.cookie('token', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+
+  res.status(StatusCodes.OK).json({ msg: 'user logged out' });
+};
