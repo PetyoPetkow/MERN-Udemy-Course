@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import User from '../models/UserModel';
 import Job from '../models/JobModel';
 import { RequestHandler } from 'express';
+import { UnauthorizedError } from '../errors/customErrors';
 
 export const getCurrentUser: RequestHandler = async (req, res) => {
   const user = await User.findById(req.user?.userId);
@@ -9,7 +10,10 @@ export const getCurrentUser: RequestHandler = async (req, res) => {
 };
 
 export const getApplicationStats: RequestHandler = async (req, res) => {
-  res.status(StatusCodes.OK).json({ msg: 'getApplicationStats' });
+  const users = await User.countDocuments();
+  const jobs = await Job.countDocuments();
+
+  res.status(StatusCodes.OK).json({ users, jobs });
 };
 
 export const updateUser: RequestHandler = async (req, res) => {
