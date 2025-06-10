@@ -72,13 +72,15 @@ export const validateRegisterInput: RequestHandler[] = withValidationErrors([
     .withMessage('name is required')
     .isLength({ min: 3, max: 32 })
     .withMessage('name should be between 3 and 32 symbols'),
-  body('email').isEmail().withMessage('invalid email'),
-  body('email').custom(async (email) => {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      throw new BadRequestError('E-mail already in use');
-    }
-  }),
+  body('email')
+    .isEmail()
+    .withMessage('invalid email')
+    .custom(async (email) => {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        throw new BadRequestError('E-mail already in use');
+      }
+    }),
   body('password')
     .notEmpty()
     .withMessage('password is required')
@@ -99,4 +101,26 @@ export const validateLoginInput: RequestHandler[] = withValidationErrors([
     .isEmail()
     .withMessage('invalid email'),
   body('password').notEmpty().withMessage('password is required'),
+]);
+
+export const validateUpdateUserInput: RequestHandler[] = withValidationErrors([
+  body('name')
+    .optional()
+    .isLength({ min: 3, max: 32 })
+    .withMessage('name should be between 3 and 32 symbols'),
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('invalid email')
+    .custom(async (email, { req }) => {
+      const existingUser = await User.findOne({ email });
+      if (existingUser && existingUser._id.toString() !== req.user.userId) {
+        throw new BadRequestError('E-mail already in use');
+      }
+    }),
+
+  body('lastName')
+    .optional()
+    .isLength({ min: 3, max: 32 })
+    .withMessage('last name should be between 3 and 32 symbols'),
 ]);
